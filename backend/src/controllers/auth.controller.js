@@ -10,7 +10,6 @@ async function registerUser(req, res) {
   } = req.body;
 
   //check user already have aur not
-
   const isUserAlreadyExists  =  await userModel.findOne({ email })
 
   if (isUserAlreadyExists) {
@@ -18,7 +17,7 @@ async function registerUser(req, res) {
   }
  
 
-  const hashPassword = await bcrypt.hash(password, 10)
+  const hashPassword = await bcrypt.hash(password, 10);
 
 
   const user = await userModel.create({
@@ -45,8 +44,8 @@ async function registerUser(req, res) {
 }
 
 async function loginUser(req, res) {
-    const {email, password} = req.body;
 
+    const {email, password} = req.body;
     const user = await userModel.findOne({email})
 
     if (!user) {
@@ -54,6 +53,7 @@ async function loginUser(req, res) {
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password)
+    
  if (!isPasswordValid) {
     return res.status(400).json({ message: "Invalid email or password"})
  }
